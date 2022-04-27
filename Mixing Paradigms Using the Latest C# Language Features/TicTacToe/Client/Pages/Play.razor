@@ -1,0 +1,45 @@
+﻿@page "/play"
+@using TicTacToe.Shared
+ 
+<div style="width: 100%; max-width: 400px">
+    <div class="container" style="max-width: 70vh; text-align: center;">
+        <div class="row">
+            <div class="col">
+                <svg viewBox="0 0 950 950">
+                    <rect x="10" y="10" width="930" height="930" rx="25" ry="25" fill="whitesmoke" />
+                    <line x1="12" x2="937" y1="312" y2="312" stroke-width="25" stroke="darkgray" stroke-linecap="round" />
+                    <line x1="12" x2="937" y1="637" y2="637" stroke-width="25" stroke="darkgray" stroke-linecap="round" />
+                    <line x1="312" x2="312" y1="12" y2="937" stroke-width="25" stroke="darkgray" stroke-linecap="round" />
+                    <line x1="637" x2="637" y1="12" y2="937" stroke-width="25" stroke="darkgray" stroke-linecap="round" />
+
+                    @foreach (Cell home in this.Board.HomeMoves)
+                    {
+                        <HomeCell Row="home.Row" Column="home.Column" />
+                    }
+
+                    @foreach (Cell away in this.Board.AwayMoves)
+                    {
+                        <AwayCell Row="away.Row" Column="away.Column" />
+                    }
+
+                    @foreach (Line line in this.Board.WinningLines)
+                    {
+                        <WinningLine FromRow="line.From.Row" FromCol="line.From.Column"
+                                     ToRow="line.To.Row" ToColumn="line.To.Column" />
+                    }
+                    
+                    @foreach (Cell empty in this.Board.PlayableCells)
+                    {
+                        <ClickableCell Row="empty.Row" Column="empty.Column"
+                                       OnClicked="() => this.MakeMove(empty.Row, empty.Column)"/>
+                    }
+                </svg>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col" style="text-align: right">
+                <button type="button" class="btn btn-success oi oi-reload" style="padding: 10px; font-weight: bold; color: white" @onclick=@Restart></button>
+            </div>
+        </div>
+    </div>
+</div>
